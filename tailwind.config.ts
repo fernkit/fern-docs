@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,6 +25,19 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				fern: {
+					'50': '#f5f8f4',
+					'100': '#e6f0e4',
+					'200': '#cfe1cc',
+					'300': '#aac9a6',
+					'400': '#7eaa79',
+					'500': '#5c8c58',
+					'600': '#457143',
+					'700': '#3a5a37',
+					'800': '#314930',
+					'900': '#293d28',
+					'950': '#152114',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -84,12 +98,27 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+                'pixel-fade': {
+                    '0%': { 
+                        opacity: '0',
+                        transform: 'scale(0.98)' 
+                    },
+                    '100%': { 
+                        opacity: '1',
+                        transform: 'scale(1)' 
+                    }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+                'pixel-fade': 'pixel-fade 0.3s ease-out'
+			},
+            fontFamily: {
+                'mono': ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                'sans': ['Inter', 'system-ui', 'sans-serif']
+            }
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
