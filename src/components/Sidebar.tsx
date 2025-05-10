@@ -65,7 +65,7 @@ const Sidebar = ({ sections }: SidebarProps) => {
                         className={cn(
                           "block px-3 py-2 text-sm rounded-md",
                           location.pathname === item.href
-                            ? "bg-primary text-primary-foreground font-medium"
+                            ? "bg-primary text-white font-medium" // Changed text color to white for better contrast
                             : "text-foreground hover:text-foreground hover:bg-secondary"
                         )}
                       >

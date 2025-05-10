@@ -30,7 +30,7 @@ const CodeBlock = ({ code, language = 'c', fileName }: CodeBlockProps) => {
         </div>
       )}
       <div className="relative">
-        <pre className={`language-${language} ${fileName ? 'rounded-t-none' : ''} code-${language}`}>
+        <pre className={`language-${language} ${fileName ? 'rounded-t-none' : ''} code-${language} overflow-x-auto`}>
           <code>{code}</code>
         </pre>
         <Button 
