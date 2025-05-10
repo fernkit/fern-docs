@@ -117,7 +117,9 @@ export default {
 			},
             fontFamily: {
                 'mono': ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                'sans': ['Inter', 'system-ui', 'sans-serif']
+                'sans': ['Inter', 'system-ui', 'sans-serif'],
+                'pixel': ['"Press Start 2P"', 'cursive'],
+                'pixel-text': ['VT323', 'monospace']
             }
 		}
 	},

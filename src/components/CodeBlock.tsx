@@ -22,20 +22,6 @@ const CodeBlock = ({ code, language = 'c', fileName }: CodeBlockProps) => {
     });
   };
 
-  // Basic syntax highlighting for C
-  const highlightC = (code: string) => {
-    return code
-      .replace(/(\/\/.*)/g, '<span class="comment">$1</span>')
-      .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$1</span>')
-      .replace(/\b(if|else|for|while|do|switch|case|break|continue|return|void|static|const|struct|typedef|extern|inline|sizeof)\b/g, '<span class="keyword">$1</span>')
-      .replace(/\b(int|char|float|double|long|short|unsigned|size_t|uint32_t)\b/g, '<span class="type">$1</span>')
-      .replace(/\b(Point_create|ButtonWidget|Container|CircleWidget|LineWidget|TextWidget|runApp|fern_start_render_loop)\b/g, '<span class="function">$1</span>')
-      .replace(/\b(0x[a-fA-F0-9]+|\d+)\b/g, '<span class="number">$1</span>')
-      .replace(/(#\w+)/g, '<span class="preprocessor">$1</span>')
-      .replace(/(".*?")/g, '<span class="string">$1</span>')
-      .replace(/('.')/g, '<span class="string">$1</span>');
-  };
-
   return (
     <div className="relative group">
       {fileName && (
@@ -45,11 +31,7 @@ const CodeBlock = ({ code, language = 'c', fileName }: CodeBlockProps) => {
       )}
       <div className="relative">
         <pre className={`language-${language} ${fileName ? 'rounded-t-none' : ''} code-${language}`}>
-          {language === 'c' ? (
-            <code dangerouslySetInnerHTML={{ __html: highlightC(code) }} />
-          ) : (
-            <code>{code}</code>
-          )}
+          <code>{code}</code>
         </pre>
         <Button 
           size="icon"

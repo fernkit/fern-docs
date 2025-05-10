@@ -27,18 +27,18 @@ const Index = () => {
                   className="h-32 w-auto" 
                 />
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">Fern Graphics Library</h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+              <h1 className="text-4xl md:text-6xl font-pixel tracking-tight mb-4 leading-normal">Fern Graphics</h1>
+              <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-pixel-text">
                 A lightweight WebAssembly-based graphics library for creating visual interactive applications using simple C code.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
-                <Button asChild size="lg" className="gap-2">
+                <Button asChild size="lg" className="gap-2 btn-pixel bg-fern-600 hover:bg-fern-700 shadow-lg">
                   <Link to="/quick-start">
                     Get Started
                     <ArrowRight size={18} />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button asChild variant="outline" size="lg" className="btn-pixel">
                   <Link to="/docs">
                     Documentation
                   </Link>
@@ -51,7 +51,7 @@ const Index = () => {
         {/* Features Section */}
         <section className="py-20">
           <div className="container px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <h2 className="text-3xl font-pixel text-center mb-12">Key Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <FeatureCard
                 icon={Package}
@@ -81,7 +81,7 @@ const Index = () => {
         <section className="py-16 bg-secondary">
           <div className="container px-4">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8 text-center">Quick Example</h2>
+              <h2 className="text-3xl font-pixel mb-8 text-center">Quick Example</h2>
               <div className="bg-card rounded-lg overflow-hidden shadow-lg pixel-border">
                 <CodeBlock 
                   code={docsData.quickStartCode}
@@ -90,7 +90,7 @@ const Index = () => {
                 />
               </div>
               <div className="mt-8 text-center">
-                <Button asChild>
+                <Button asChild className="btn-pixel bg-fern-600 hover:bg-fern-700">
                   <Link to="/quick-start">
                     See More Examples
                   </Link>
@@ -104,18 +104,18 @@ const Index = () => {
         <section className="py-20">
           <div className="container px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">Ready to start building?</h2>
-              <p className="text-xl text-muted-foreground mb-8">
+              <h2 className="text-3xl font-pixel mb-4">Ready to start building?</h2>
+              <p className="text-xl text-muted-foreground mb-8 font-pixel-text">
                 Fern makes it easy to create interactive graphics applications with simple C code.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
-                <Button asChild size="lg" className="gap-2">
+                <Button asChild size="lg" className="gap-2 btn-pixel bg-fern-600 hover:bg-fern-700 shadow-lg">
                   <Link to="/quick-start">
                     Get Started
                     <ArrowRight size={18} />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="gap-2">
+                <Button asChild variant="outline" size="lg" className="gap-2 btn-pixel">
                   <a href="https://github.com/RishiAhuja/fern" target="_blank" rel="noopener noreferrer">
                     <Code size={18} />
                     View on GitHub
