@@ -1,0 +1,100 @@
+/* Base styles for code and pre elements */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #e0def4;
+  background: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+}
+
+/* Make the background of the code block darker */
+pre[class*="language-"] {
+  background-color: #1a1b26 !important; /* Dark navy background */
+  border-color: #292e42 !important; /* Slightly lighter border */
+}
+
+/* Update the code block component too */
+.code-block-wrapper pre {
+  background-color: #1a1b26 !important;
+  border-color: #292e42 !important;
+}
+
+/* Tokens - customized to match the screenshot */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #7a7c9e; /* Muted grayish-purple for comments */
+}
+
+.token.punctuation {
+  color: #9aa5ce; /* Light blue-gray for punctuation */
+}
+
+.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ff9e64; /* Orange for numbers/constants as seen in screenshot */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #9ece6a; /* Green for strings as seen in screenshot */
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #bb9af7; /* Light purple for operators */
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #7dcfff; /* Light blue for keywords as seen in screenshot */
+}
+
+.token.function,
+.token.class-name {
+  color: #f7768e; /* Pink/red for functions as seen in screenshot */
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #e0af68; /* Gold/yellow for variables */
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}

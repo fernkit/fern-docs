@@ -143,11 +143,13 @@ return 0;`}
             </ul>
             
             <div className="flex justify-center mt-10">
-              <Button asChild>
-                <Link to="/docs">
-                  Explore Documentation
-                </Link>
-              </Button>
+                  <div className="flex justify-center mt-10">
+      <Button asChild variant="default">
+        <Link to="/docs" className="!text-white">
+          Explore Documentation
+        </Link>
+      </Button>
+    </div>
             </div>
           </div>
         </div>

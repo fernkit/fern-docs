@@ -1,3 +1,13 @@
+import { overviewContent } from './docs/overview';
+import { installationContent } from './docs/installation';
+import { coreTypesContent } from './docs/coreTypes';
+import { colorConstantsContent } from './docs/colorConstants';
+import { widgetFunctionsContent } from './docs/widgetFunctions';
+import { drawingFunctionsContent } from './docs/drawingFunctions';
+import { applicationLifecycleContent } from './docs/applicationLifecycle';
+import { cppCoreClassesContent } from './docs/cppCoreClasses';
+import { cppLayoutSystemContent } from './docs/cppLayoutSystem';
+import { cppSignalSlotContent } from './docs/cppSignalSlot';
 
 export const docsData = {
   sections: [
@@ -7,77 +17,178 @@ export const docsData = {
         {
           title: "Overview",
           href: "/docs",
-          id: "overview"
+          id: "overview",
+          language: "both" as "both"
         },
         {
           title: "Installation",
           href: "/docs/installation",
-          id: "installation"
+          id: "installation",
+          language: "both" as "both"
         },
         {
           title: "Quick Start",
           href: "/quick-start",
-          id: "quick-start"
+          id: "quick-start",
+          language: "both" as "both"
+        },
+        {
+          title: "Migration Guide",
+          href: "/docs/migration-guide",
+          id: "migration-guide",
+          language: "both" as "both"
         }
       ]
     },
     {
-      title: "API Reference",
+      title: "C API Reference",
       items: [
         {
           title: "Core Types",
           href: "/docs/core-types",
-          id: "core-types"
+          id: "core-types",
+          language: "c" as "c"
         },
         {
           title: "Color Constants",
           href: "/docs/color-constants",
-          id: "color-constants"
+          id: "color-constants",
+          language: "c" as "c"
         },
         {
           title: "Widget Functions",
           href: "/docs/widget-functions",
-          id: "widget-functions"
+          id: "widget-functions",
+          language: "c" as "c"
         },
         {
           title: "Drawing Functions",
           href: "/docs/drawing-functions",
-          id: "drawing-functions"
+          id: "drawing-functions",
+          language: "c" as "c"
         },
         {
           title: "Application Lifecycle",
           href: "/docs/application-lifecycle",
-          id: "application-lifecycle"
+          id: "application-lifecycle",
+          language: "c" as "c"
         },
         {
           title: "PPM Export",
           href: "/docs/ppm-export",
-          id: "ppm-export"
+          id: "ppm-export",
+          language: "c" as "c"
         }
       ]
     },
     {
-      title: "Advanced",
+      title: "C++ API Reference",
+      items: [
+        {
+          title: "Core Classes",
+          href: "/docs/core-classes",
+          id: "core-classes",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "Widget Classes",
+          href: "/docs/widget-functions",
+          id: "widget-functions",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "Layout System",
+          href: "/docs/layout-system",
+          id: "layout-system",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "Signal/Slot System",
+          href: "/docs/signal-slot",
+          id: "signal-slot",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "Application Lifecycle",
+          href: "/docs/application-lifecycle",
+          id: "application-lifecycle",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "PPM Export",
+          href: "/docs/ppm-export",
+          id: "ppm-export",
+          language: "cpp" as "cpp"
+        }
+      ]
+    },
+    {
+      title: "Advanced Features",
       items: [
         {
           title: "Filled Shapes",
           href: "/docs/filled-shapes",
-          id: "filled-shapes"
+          id: "filled-shapes",
+          language: "both" as "both"
         },
         {
           title: "Scene Components",
           href: "/docs/scene-components",
-          id: "scene-components"
+          id: "scene-components",
+          language: "both" as "both"
+        },
+        {
+          title: "Responsive Design",
+          href: "/docs/responsive-design",
+          id: "responsive-design",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "Event Handling",
+          href: "/docs/event-handling",
+          id: "event-handling",
+          language: "both" as "both"
         },
         {
           title: "CLI Tool",
           href: "/docs/cli-tool",
-          id: "cli-tool"
+          id: "cli-tool",
+          language: "both" as "both"
         },
         {
           title: "Architecture",
           href: "/docs/architecture",
-          id: "architecture"
+          id: "architecture",
+          language: "both" as "both"
+        }
+      ]
+    },
+    {
+      title: "C++ Advanced Topics",
+      items: [
+        {
+          title: "Widget Hierarchy",
+          href: "/docs/widget-hierarchy",
+          id: "widget-hierarchy",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "Custom Widgets",
+          href: "/docs/custom-widgets",
+          id: "custom-widgets",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "Animation System",
+          href: "/docs/animation-system",
+          id: "animation-system",
+          language: "cpp" as "cpp"
+        },
+        {
+          title: "State Management",
+          href: "/docs/state-management",
+          id: "state-management",
+          language: "cpp" as "cpp"
         }
       ]
     }
@@ -154,35 +265,25 @@ int main() {
     // Start rendering
     fern_start_render_loop();
     return 0;
-}`
+}`,
+  
+  content: {
+    overview: overviewContent,
+    installation: installationContent,
+    "core-types": coreTypesContent,
+    "color-constants": colorConstantsContent,
+    "widget-functions": widgetFunctionsContent,
+    "drawing-functions": drawingFunctionsContent,
+    "application-lifecycle": applicationLifecycleContent,
+    
+    // C++ Documentation modules
+    "core-classes": cppCoreClassesContent,
+    "layout-system": cppLayoutSystemContent,
+    "signal-slot": cppSignalSlotContent
+  }
 };
 
-export const installSteps = [
-  {
-    title: "Step 1: Install Dependencies",
-    code: `# Install Emscripten SDK
-git clone https://github.com/emscripten-core/emsdk.git
-cd emsdk
-./emsdk install latest
-./emsdk activate latest
-source ./emsdk_env.sh`
-  },
-  {
-    title: "Step 2: Install Fern CLI",
-    code: `# Clone the repository
-git clone https://github.com/RishiAhuja/fern.git
-cd fern
-
-# Make the CLI script executable
-chmod +x fern-cli.sh
-
-# Create a symbolic link to make it available system-wide
-sudo ln -s $(pwd)/fern-cli.sh /usr/local/bin/fern
-
-# Optional: Install the man page
-sudo install -m 644 fern.1 /usr/local/share/man/man1/
-sudo mandb`
-  }
-];
+// Export installation steps from the modular file
+export const installSteps = installationContent.steps;
 
 export default docsData;
