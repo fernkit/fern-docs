@@ -24,6 +24,7 @@ const DocsRenderer = () => {
   const [currentDoc, setCurrentDoc] = useState<DocContent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Configurable doc structure - easily reorder and rename items here
   const docStructureConfig: DocFile[] = [
@@ -267,6 +268,7 @@ int main() {
   useEffect(() => {
     if (docPath) {
       setLoading(true);
+      setMobileMenuOpen(false); // Close mobile menu when navigating
       loadDocContent(docPath)
         .then(content => {
           setCurrentDoc(content);
@@ -279,6 +281,7 @@ int main() {
         .finally(() => setLoading(false));
     } else {
       setLoading(true);
+      setMobileMenuOpen(false); // Close mobile menu when navigating
       loadDocContent("getting-started")
         .then(content => {
           setCurrentDoc(content);
@@ -362,7 +365,7 @@ int main() {
       
       <div className="flex min-h-screen pt-16">
         {/* Sidebar */}
-        <div className="w-72 bg-gray-50/50 border-r border-gray-200 overflow-y-auto fixed h-full top-16">
+        <div className="w-72 bg-gray-50/50 border-r border-gray-200 overflow-y-auto fixed h-full top-16 hidden lg:block">
           <div className="p-6">
             <div className="mb-6">
               <Link 
@@ -399,8 +402,62 @@ int main() {
           </div>
         </div>
 
+        {/* Mobile Navigation Toggle */}
+        <div className="lg:hidden fixed top-16 left-0 right-0 bg-white border-b border-gray-200 z-10">
+          <div className="p-4">
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
+            >
+              <BookOpen size={16} />
+              <span>Documentation Menu</span>
+              <svg 
+                className={`w-4 h-4 transition-transform ${mobileMenuOpen ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="bg-gray-50 border-t border-gray-200 max-h-80 overflow-y-auto">
+              <div className="p-4">
+                <nav className="space-y-2">
+                  {docStructure.map(item => renderDocItem(item))}
+                </nav>
+                <div className="mt-6 pt-4 border-t border-gray-200">
+                  <a 
+                    href="https://github.com/fernkit/fern" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm"
+                  >
+                    <Github size={16} />
+                    <span>GitHub</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Main Content */}
-        <div className="flex-1 p-8 max-w-5xl mx-auto ml-72">
+        <div className="flex-1 p-4 lg:p-8 max-w-5xl mx-auto lg:ml-72 w-full lg:pt-0 pt-16">
+          {/* Mobile Back Button */}
+          <div className="lg:hidden mb-6">
+            <Link 
+              to="/" 
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
+            >
+              <ArrowLeft size={16} />
+              <span>Back to Home</span>
+            </Link>
+          </div>
+
           {loading ? (
             <div className="flex items-center justify-center h-64">
               <div className="text-gray-500">Loading documentation...</div>
@@ -419,8 +476,8 @@ int main() {
             </div>
           ) : currentDoc ? (
             <article className="max-w-none">
-              <header className="mb-8">
-                <h1 className="text-xl font-semibold mb-3" style={{ color: 'var(--fern-green)', fontFamily: 'VT323, monospace' }}>
+              <header className="mb-6 lg:mb-8">
+                <h1 className="text-lg lg:text-xl font-semibold mb-3" style={{ color: 'var(--fern-green)', fontFamily: 'VT323, monospace' }}>
                   {currentDoc.title}
                 </h1>
                 {currentDoc.lastModified && (
@@ -436,15 +493,15 @@ int main() {
               
               {/* Up Next Navigation */}
               {getNextDoc(docPath) && (
-                <div className="mt-12 pt-8 border-t border-gray-200">
-                  <div className="bg-gray-50 rounded-lg p-6">
+                <div className="mt-8 lg:mt-12 pt-6 lg:pt-8 border-t border-gray-200">
+                  <div className="bg-gray-50 rounded-lg p-4 lg:p-6">
                     <p className="text-sm text-gray-600 mb-2">Up Next</p>
                     <Link 
                       to={`/docs/${getNextDoc(docPath)?.path}`}
                       className="flex items-center gap-3 text-gray-900 hover:text-gray-700 transition-colors"
                     >
                       <div className="flex-1">
-                        <h3 className="font-medium">{getNextDoc(docPath)?.name}</h3>
+                        <h3 className="font-medium text-sm lg:text-base">{getNextDoc(docPath)?.name}</h3>
                         <p className="text-sm text-gray-600 mt-1">Continue reading →</p>
                       </div>
                     </Link>
@@ -453,9 +510,9 @@ int main() {
               )}
             </article>
           ) : (
-            <div className="text-center text-gray-500 mt-32">
+            <div className="text-center text-gray-500 mt-16 lg:mt-32">
               <BookOpen size={48} className="mx-auto mb-4 text-gray-300" />
-              <p>Select a documentation page from the sidebar to get started.</p>
+              <p className="text-sm lg:text-base">Select a documentation page from the {mobileMenuOpen ? 'menu above' : 'sidebar'} to get started.</p>
             </div>
           )}
         </div>
@@ -465,52 +522,83 @@ int main() {
         .docs-content h1 {
           font-family: 'VT323', monospace;
           font-weight: normal;
-          font-size: 2.5rem;
+          font-size: 2rem;
           line-height: 1.2;
           margin-bottom: 1.5rem;
           margin-top: 2.5rem;
           color: #222C21;
         }
         
+        @media (min-width: 1024px) {
+          .docs-content h1 {
+            font-size: 2.5rem;
+          }
+        }
+        
         .docs-content h2 {
           font-family: 'VT323', monospace;
           font-weight: normal;
-          font-size: 2rem;
+          font-size: 1.5rem;
           line-height: 1.2;
           margin-bottom: 1rem;
           margin-top: 2rem;
           color: #222C21;
         }
         
+        @media (min-width: 1024px) {
+          .docs-content h2 {
+            font-size: 2rem;
+          }
+        }
+        
         .docs-content h3 {
           font-family: 'VT323', monospace;
           font-weight: normal;
-          font-size: 1.75rem;
+          font-size: 1.375rem;
           line-height: 1.2;
           margin-bottom: 0.75rem;
           margin-top: 1.75rem;
           color: #222C21;
         }
         
+        @media (min-width: 1024px) {
+          .docs-content h3 {
+            font-size: 1.75rem;
+          }
+        }
+        
         .docs-content h4 {
           font-family: 'VT323', monospace;
           font-weight: normal;
-          font-size: 1.5rem;
+          font-size: 1.25rem;
           line-height: 1.2;
           margin-bottom: 0.5rem;
           margin-top: 1.5rem;
           color: #222C21;
         }
         
+        @media (min-width: 1024px) {
+          .docs-content h4 {
+            font-size: 1.5rem;
+          }
+        }
+        
         .docs-content h5,
         .docs-content h6 {
           font-family: 'VT323', monospace;
           font-weight: normal;
-          font-size: 1.25rem;
+          font-size: 1.125rem;
           line-height: 1.2;
           margin-bottom: 0.5rem;
           margin-top: 1.25rem;
           color: #222C21;
+        }
+        
+        @media (min-width: 1024px) {
+          .docs-content h5,
+          .docs-content h6 {
+            font-size: 1.25rem;
+          }
         }
         
         .docs-content p {
@@ -518,12 +606,26 @@ int main() {
           line-height: 1.6;
           margin-bottom: 1rem;
           color: #374151;
+          font-size: 0.875rem;
+        }
+        
+        @media (min-width: 1024px) {
+          .docs-content p {
+            font-size: 1rem;
+          }
         }
         
         .docs-content ul, .docs-content ol {
           font-family: 'Inter', sans-serif;
           margin-bottom: 1rem;
           padding-left: 1.5rem;
+          font-size: 0.875rem;
+        }
+        
+        @media (min-width: 1024px) {
+          .docs-content ul, .docs-content ol {
+            font-size: 1rem;
+          }
         }
         
         .docs-content li {
@@ -535,24 +637,43 @@ int main() {
           background: #f8fafc;
           border: 1px solid #e2e8f0;
           border-radius: 6px;
-          padding: 1rem;
+          padding: 0.75rem;
           overflow-x: auto;
           margin: 1rem 0;
-          font-size: 0.875rem;
+          font-size: 0.75rem;
+        }
+        
+        @media (min-width: 1024px) {
+          .docs-content pre {
+            padding: 1rem;
+            font-size: 0.875rem;
+          }
         }
         
         .docs-content code {
           background: #f1f5f9;
           padding: 0.125rem 0.375rem;
           border-radius: 3px;
-          font-size: 0.85em;
+          font-size: 0.75em;
           font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+        
+        @media (min-width: 1024px) {
+          .docs-content code {
+            font-size: 0.85em;
+          }
         }
         
         .docs-content pre code {
           background: transparent;
           padding: 0;
-          font-size: 0.875rem;
+          font-size: 0.75rem;
+        }
+        
+        @media (min-width: 1024px) {
+          .docs-content pre code {
+            font-size: 0.875rem;
+          }
         }
         
         .docs-content blockquote {
