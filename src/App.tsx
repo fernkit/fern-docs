@@ -6,8 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./hooks/useLanguageContext";
 import Index from "./pages/Index";
-import Documentation from "./pages/Documentation";
-import QuickStart from "./pages/QuickStart";
+import DocsRenderer from "./pages/DocsRenderer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,9 +20,8 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/docs" element={<Documentation />} />
-            <Route path="/docs/:section" element={<Documentation />} />
-            <Route path="/quick-start" element={<QuickStart />} />
+            <Route path="/docs" element={<DocsRenderer />} />
+            <Route path="/docs/*" element={<DocsRenderer />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

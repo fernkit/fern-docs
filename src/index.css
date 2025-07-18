@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Press+Start+2P&family=VT323&display=swap');
 
 @tailwind base;
@@ -7,6 +6,9 @@
 
 @layer base {
   :root {
+    /* Fern Green Color */
+    --fern-green: #457143;
+    
     --background: 80 30% 97%;
     --foreground: 110 15% 15%;
 
@@ -163,6 +165,21 @@
   .btn-pixel {
     @apply font-pixel border-2 border-b-4 border-r-4 border-gray-800 transition-transform active:translate-y-1 active:border-b-2 active:border-r-2;
   }
+  
+  .shadow-solid {
+    box-shadow: 4px 4px 0px rgba(45, 74, 45, 0.6);
+    border: 2px solid transparent !important;
+  }
+
+  .shadow-solid:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px rgba(45, 74, 45, 0.6);
+  }
+
+  .shadow-solid:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px rgba(45, 74, 45, 0.6);
+  }
 }
 
 /* Code highlighting styles */
@@ -192,4 +209,204 @@
 
 .code-c .type {
   @apply text-teal-600 dark:text-teal-400;
+}
+
+/* Pixelated image rendering */
+.pixelated {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Enhanced jagged border effects */
+.jagged-border {
+  position: relative;
+}
+
+.jagged-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, transparent 30%, rgba(92, 140, 88, 0.3) 30%, rgba(92, 140, 88, 0.3) 70%, transparent 70%);
+  z-index: -1;
+  clip-path: polygon(
+    0% 0%, 
+    10% 0%, 
+    10% 10%, 
+    20% 10%, 
+    20% 0%, 
+    100% 0%, 
+    100% 90%, 
+    90% 90%, 
+    90% 100%, 
+    80% 100%, 
+    80% 90%, 
+    0% 90%
+  );
+}
+
+/* Glitch effect for hero text */
+.glitch {
+  position: relative;
+  animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-1 0.3s infinite;
+  color: rgba(92, 140, 88, 0.8);
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-2 0.3s infinite;
+  color: rgba(92, 140, 88, 0.6);
+  z-index: -2;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-1px, 1px); }
+  40% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+}
+
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  10% { transform: translate(-1px, -1px); }
+  20% { transform: translate(-1px, 1px); }
+  30% { transform: translate(1px, 1px); }
+  40% { transform: translate(1px, -1px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(1px, 0); }
+  40% { transform: translate(-1px, 0); }
+  60% { transform: translate(0, 1px); }
+  80% { transform: translate(0, -1px); }
+}
+
+/* Organic growth animation */
+@keyframes grow {
+  0% { 
+    transform: scale(0.95) rotate(-1deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.02) rotate(0.5deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-grow {
+  animation: grow 3s ease-in-out infinite alternate;
+}
+
+/* Enhanced pixel button */
+.btn-pixel {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-pixel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-pixel:hover::before {
+  left: 100%;
+}
+
+/* Organic shapes */
+.organic-shape {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: morph 8s ease-in-out infinite;
+}
+
+@keyframes morph {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  50% {
+    border-radius: 70% 30% 50% 50% / 30% 50% 70% 50%;
+  }
+  75% {
+    border-radius: 40% 70% 60% 30% / 70% 40% 50% 60%;
+  }
+}
+
+/* Pixelated grid background enhancement */
+.pixel-grid-enhanced {
+  background-size: 8px 8px, 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(92, 140, 88, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(92, 140, 88, 0.1) 1px, transparent 1px),
+    linear-gradient(to right, rgba(92, 140, 88, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(92, 140, 88, 0.05) 1px, transparent 1px);
+}
+
+/* Handcrafted imperfect borders */
+.imperfect-border {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, 
+    rgba(92, 140, 88, 0.8) 0%, 
+    rgba(92, 140, 88, 0.6) 25%, 
+    rgba(92, 140, 88, 0.9) 50%, 
+    rgba(92, 140, 88, 0.7) 75%, 
+    rgba(92, 140, 88, 0.8) 100%
+  ) 1;
+  clip-path: polygon(
+    0% 2px, 
+    2px 0%, 
+    calc(100% - 2px) 0%, 
+    100% 2px, 
+    100% calc(100% - 2px), 
+    calc(100% - 2px) 100%, 
+    2px 100%, 
+    0% calc(100% - 2px)
+  );
+}
+
+/* Scattered dots background */
+.scattered-dots::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(92, 140, 88, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 80% 20%, rgba(92, 140, 88, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(92, 140, 88, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 0% 100%, rgba(92, 140, 88, 0.1) 2px, transparent 2px),
+    radial-gradient(circle at 100% 0%, rgba(92, 140, 88, 0.1) 1px, transparent 1px);
+  background-size: 100px 100px, 50px 50px, 80px 80px, 120px 120px, 60px 60px;
+  z-index: -1;
+  pointer-events: none;
 }

@@ -1,48 +1,163 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Package, Zap, Code, Activity, Layout, Layers } from "lucide-react";
-import FeatureCard from '@/components/FeatureCard';
-import CodeBlock from '@/components/CodeBlock';
+import { ArrowRight, Github, Code2, Layers, Network, Terminal, Zap, Leaf, BookOpen, ExternalLink } from "lucide-react";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { docsData } from '@/lib/docsData';
-import { useLanguageContext } from '@/hooks/useLanguageContext';
-import { codeExamples } from '@/lib/codeExamples';
 
 const Index = () => {
-  const { language, setLanguage } = useLanguageContext();
-  
+  const tools = [
+    {
+      name: "fern",
+      logo: "/logo/fern.png",
+      description: "A UI toolkit for WASM & Linux, rendered pixel-by-pixel from scratch.",
+      language: "C++",
+      repo: "github.com/fernkit/fern",
+      color: "from-green-600 to-emerald-700",
+      icon: Layers
+    },
+    {
+      name: "terra",
+      logo: "/logo/terra.png", 
+      description: "The underlying CLI toolchain for managing FernKit project workflows.",
+      language: "Python",
+      repo: "github.com/fernkit/terra",
+      color: "from-amber-600 to-orange-700",
+      icon: Terminal
+    },
+    {
+      name: "conduit",
+      logo: "/logo/conduit.png",
+      description: "A simple socket client for synchronous, low-level networking.",
+      language: "C++", 
+      repo: "github.com/fernkit/conduit",
+      color: "from-blue-600 to-cyan-700",
+      icon: Network
+    },
+    {
+      name: "grub",
+      logo: "/logo/grub.png",
+      description: "A low-level, imperfect ttf text rasterizer for Fern apps.",
+      language: "C++",
+      repo: "github.com/fernkit/grub", 
+      color: "from-purple-600 to-violet-700",
+      icon: Code2
+    },
+    {
+      name: "gleeb",
+      logo: "/logo/gleeb.png",
+      description: "A language server providing code intelligence for the Fern UI toolkit.",
+      language: "TypeScript",
+      repo: "github.com/fernkit/gleeb",
+      color: "from-indigo-600 to-blue-700",
+      icon: Zap
+    },
+    {
+      name: "flare",
+      logo: "/logo/flare.png",
+      description: "A repository of starter templates for bootstrapping FernKit projects.",
+      language: "C++",
+      repo: "github.com/fernkit/flare",
+      color: "from-red-600 to-rose-700",
+      icon: BookOpen
+    }
+  ];
+
+  const philosophies = [
+    {
+      title: "Built to Teach",
+      description: "Transparent learning tools that expose inner workings instead of hiding them in black boxes. Understanding fundamentals through hands-on exploration.",
+      icon: BookOpen
+    },
+    {
+      title: "Imperfect and Evolving", 
+      description: "A living system that embraces flaws as authentic signs of growth. Tools released early, evolving publicly with the community.",
+      icon: Leaf
+    },
+    {
+      title: "Thematically Cohesive",
+      description: "Nature metaphors guide architecture. Terra (soil), Fern (plant), Conduit (roots), Grub (larva) - each tool reflects its place in the lifecycle.",
+      icon: Layers
+    },
+    {
+      title: "Minimal and Composable",
+      description: "Lean, understandable codebases with minimal dependencies. Complete control and responsibility. Use the entire ecosystem or cherry-pick individual tools.",
+      icon: Terminal
+    }
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-secondary to-background relative overflow-hidden border-b border-border">
-          <div className="absolute inset-0 pixel-grid opacity-30"></div>
-          <div className="container px-4 py-20 md:py-32 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="flex justify-center mb-6">
+        <section className="relative overflow-hidden border-b border-border/20" style={{
+          background: `linear-gradient(135deg, #F8FAF5 0%, #F8FAF5 100%)`,
+        }}>
+          {/* Simple grid background */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="w-full h-full" style={{
+              backgroundImage: `linear-gradient(to right, var(--fern-green) 1px, transparent 1px), linear-gradient(to bottom, var(--fern-green) 1px, transparent 1px)`,
+              backgroundSize: '40px 40px'
+            }}></div>
+          </div>
+          
+          <div className="container px-4 py-24 md:py-32 relative z-10">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="flex justify-center mb-8">
                 <img 
-                  src="/lovable-uploads/4436af5f-ff0f-459d-b3f7-41c58f50b55f.png" 
-                  alt="Fern Graphics Logo" 
-                  className="h-32 w-auto" 
+                  src="/logo/fern.png" 
+                  alt="FernKit Logo" 
+                  className="h-24 w-24 pixelated transition-transform hover:scale-110" 
+                  style={{
+                    imageRendering: 'pixelated'
+                  }}
                 />
               </div>
-              <h1 className="text-4xl md:text-6xl font-pixel tracking-tight mb-4 leading-normal">Fern Graphics</h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8 font-pixel-text">
-                A lightweight WebAssembly-based graphics library for creating visual interactive applications using {language === 'cpp' ? 'modern C++' : 'simple C'} code.
+              
+              <h1 className="text-5xl md:text-7xl font-pixel text-gray-900 mb-6 leading-tight tracking-wider">
+                <span style={{ color: 'var(--fern-green)' }}>Fern</span>Kit
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-gray-700 mb-4 max-w-3xl mx-auto leading-relaxed">
+                A Minimalist, Handcrafted Software Ecosystem
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button asChild size="lg" className="gap-2 btn-pixel bg-fern-600 hover:bg-fern-700 shadow-lg text-white">
+              
+              <p className="text-lg text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+                Low-level, system-oriented developer tools built around nature, growth, imperfection, and emergence. 
+                Where frameworks strive for abstraction, FernKit leans into raw control and transparent design.
+              </p>
+              
+              <div className="flex flex-wrap gap-6 justify-center">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="gap-3 text-white text-lg px-8 py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1 active:translate-x-2 active:translate-y-2"
+                  style={{ 
+                    backgroundColor: 'var(--fern-green)', 
+                    border: '2px solid #2d4a2d',
+                    boxShadow: '4px 4px 0px #2d4a2d'
+                  }}
+                >
                   <Link to="/quick-start" className='!text-white'>
-                    Get Started
-                    <ArrowRight size={18} />
+                    <Leaf size={20} />
+                    Start Growing
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="btn-pixel">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="text-lg px-8 py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1 active:translate-x-2 active:translate-y-2"
+                  style={{ 
+                    backgroundColor: 'white', 
+                    color: 'var(--fern-green)',
+                    border: '2px solid var(--fern-green)',
+                    boxShadow: '4px 4px 0px var(--fern-green)'
+                  }}
+                >
                   <Link to="/docs">
+                    <Code2 size={20} />
                     Documentation
                   </Link>
                 </Button>
@@ -51,256 +166,170 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Language Toggle Section */}
-        <section className="py-8 bg-muted/30">
+        {/* Philosophy Section */}
+        <section className="py-20 bg-background">
           <div className="container px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 rounded-lg bg-card shadow-lg border border-border">
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">Choose Your Implementation</h2>
-                  <p className="text-muted-foreground">
-                    Fern Graphics is available in both C and C++ implementations. Toggle to see the differences.
-                  </p>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <Button 
-                    variant={language === 'c' ? "default" : "outline"}
-                    onClick={() => setLanguage('c')}
-                    className={language === 'c' ? "bg-fern-600 hover:bg-fern-700" : ""}
-                  >
-                    C Implementation
-                  </Button>
-                  <Button 
-                    variant={language === 'cpp' ? "default" : "outline"}
-                    onClick={() => setLanguage('cpp')}
-                    className={language === 'cpp' ? "bg-fern-600 hover:bg-fern-700" : ""}
-                  >
-                    C++ Implementation
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-20">
-          <div className="container px-4">
-            <h2 className="text-3xl font-pixel text-center mb-6">Key Features</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-center mb-12">
-              {language === 'cpp' ? 
-                "The C++ implementation offers a modern, object-oriented API with advanced features." :
-                "The C implementation provides a simple yet powerful API for creating interactive graphics applications."}
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {language === 'cpp' ? (
-                <>
-                  <FeatureCard
-                    icon={Code}
-                    title="Object-Oriented Design"
-                    description="Modern C++ design patterns with classes, inheritance, and smart pointers."
-                  />
-                  <FeatureCard
-                    icon={Layout}
-                    title="Layout System"
-                    description="Powerful layout system inspired by Flutter for creating responsive UIs."
-                  />
-                  <FeatureCard
-                    icon={Zap}
-                    title="Signal/Slot System"
-                    description="Type-safe event handling with a flexible signal/slot implementation."
-                  />
-                  <FeatureCard
-                    icon={Layers}
-                    title="Widget Hierarchy"
-                    description="Compose complex UIs with parent-child relationships between widgets."
-                  />
-                  <FeatureCard
-                    icon={Activity}
-                    title="Responsive Design"
-                    description="Create applications that adapt to different screen sizes and orientations."
-                  />
-                  <FeatureCard
-                    icon={Package}
-                    title="Memory Safety"
-                    description="Smart pointers and RAII for automatic resource management."
-                  />
-                </>
-              ) : (
-                <>
-                  <FeatureCard
-                    icon={Package}
-                    title="Single-File Implementation"
-                    description="Easy to integrate with minimal dependencies. Just include the single header file in your project."
-                  />
-                  <FeatureCard
-                    icon={Code}
-                    title="WebAssembly Powered"
-                    description="Run your graphics code at near-native speed directly in the browser using WebAssembly."
-                  />
-                  <FeatureCard
-                    icon={Zap}
-                    title="Declarative API"
-                    description="Clean, readable code with named parameters for a more intuitive development experience."
-                  />
-                  <FeatureCard
-                    icon={Activity}
-                    title="Interactive UI Elements"
-                    description="Built-in support for user interactions including buttons and mouse event handling."
-                  />
-                  <FeatureCard
-                    icon={Layout}
-                    title="Simple Integration"
-                    description="Easy to integrate into existing projects with minimal setup."
-                  />
-                  <FeatureCard
-                    icon={Layers}
-                    title="Beginner Friendly"
-                    description="Perfect for learning graphics programming concepts with C."
-                  />
-                </>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* Code Example Section */}
-        <section className="py-16 bg-secondary">
-          <div className="container px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-pixel mb-4 text-center">Quick Example</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-center mb-8">
-                Create your first Fern application with just a few lines of code.
-              </p>
-              <div className="bg-card rounded-lg overflow-hidden shadow-lg pixel-border">
-                <CodeBlock 
-                  code={language === 'cpp' ? codeExamples.basicExample.cpp : codeExamples.basicExample.c}
-                  language={language}
-                  fileName={language === 'cpp' ? "main.cpp" : "main.c"}
-                />
-              </div>
-              <div className="mt-8 text-center">
-                <Button asChild className="btn-pixel bg-fern-600 hover:bg-fern-700">
-                  <Link to="/docs/quick-start" className='!text-white'>
-                    See More Examples
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Comparison Section */}
-        <section className="py-16 bg-muted/20">
-          <div className="container px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-pixel mb-4">Implementation Comparison</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Choose the implementation that best fits your needs.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <div className="p-6 rounded-lg bg-card shadow-lg border border-border">
-                <h3 className="text-2xl font-bold mb-4 text-center">C Implementation</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Minimal size and overhead</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Simple API for beginners</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Single-file implementation</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Great for small projects</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-500 mr-2">✗</span>
-                    <span>No layout system</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-500 mr-2">✗</span>
-                    <span>Limited widget types</span>
-                  </li>
-                </ul>
-                <div className="mt-6 text-center">
-                  <Button 
-                    onClick={() => setLanguage('c')}
-                    variant={language === 'c' ? "default" : "outline"}
-                    className={language === 'c' ? "bg-fern-600 hover:bg-fern-700" : ""}
-                  >
-                    Choose C Implementation
-                  </Button>
-                </div>
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-pixel mb-6 text-foreground">The FernKit Philosophy</h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                  Our ecosystem is guided by core principles that define our approach to building software.
+                </p>
               </div>
               
-              <div className="p-6 rounded-lg bg-card shadow-lg border border-border">
-                <h3 className="text-2xl font-bold mb-4 text-center">C++ Implementation</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Object-oriented design</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Powerful layout system</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Signal/slot event mechanism</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>More widget types</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
-                    <span>Responsive design capabilities</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-red-500 mr-2">✗</span>
-                    <span>Larger code footprint</span>
-                  </li>
-                </ul>
-                <div className="mt-6 text-center">
-                  <Button 
-                    onClick={() => setLanguage('cpp')}
-                    variant={language === 'cpp' ? "default" : "outline"}
-                    className={language === 'cpp' ? "bg-fern-600 hover:bg-fern-700" : ""}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {philosophies.map((philosophy, index) => (
+                  <div 
+                    key={philosophy.title}
+                    className="group relative p-6 rounded-lg bg-white/80 backdrop-blur-sm border-2 transition-all duration-300"
+                    style={{ borderColor: 'rgba(69, 113, 67, 0.3)' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(69, 113, 67, 0.6)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(69, 113, 67, 0.3)';
+                    }}
                   >
-                    Choose C++ Implementation
-                  </Button>
-                </div>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 p-2 rounded transition-colors"
+                           style={{ backgroundColor: 'rgba(69, 113, 67, 0.1)' }}>
+                        <philosophy.icon size={20} style={{ color: 'var(--fern-green)' }} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-pixel mb-2 text-foreground">{philosophy.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{philosophy.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Core Repositories Section */}
+        <section className="py-20 bg-background">
+          <div className="container px-4">
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-pixel mb-6 text-foreground">Core Repositories</h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                  FernKit is composed of several handcrafted tools that bring the ecosystem to life.
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {tools.map((tool, index) => (
+                  <div 
+                    key={tool.name}
+                    className="group relative bg-white/95 rounded-lg overflow-hidden border transition-all duration-300 hover:shadow-md"
+                    style={{ borderColor: 'rgba(69, 113, 67, 0.1)' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(69, 113, 67, 0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(69, 113, 67, 0.1)';
+                    }}
+                  >
+                    {/* Very subtle background */}
+                    <div className="absolute inset-0 bg-gray-50/30"></div>
+                    
+                    <div className="relative p-6">
+                      {/* Tool header with logo and name */}
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="relative">
+                          <img 
+                            src={tool.logo} 
+                            alt={`${tool.name} logo`}
+                            className="h-10 w-10 pixelated"
+                            style={{
+                              imageRendering: 'pixelated'
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-pixel text-foreground">{tool.name}</h3>
+                          <span className="inline-block px-2 py-1 text-xs bg-muted text-muted-foreground rounded border">
+                            {tool.language}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {/* Description */}
+                      <p className="text-muted-foreground leading-relaxed mb-6">
+                        {tool.description}
+                      </p>
+                      
+                      {/* Footer with GitHub link */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">{tool.repo}</span>
+                        <Button
+                          asChild
+                          variant="ghost"
+                          size="sm"
+                          className="gap-2 transition-colors"
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(69, 113, 67, 0.1)';
+                            e.currentTarget.style.color = 'var(--fern-green)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = '';
+                            e.currentTarget.style.color = '';
+                          }}
+                        >
+                          <a href={`https://${tool.repo}`} target="_blank" rel="noopener noreferrer">
+                            <Github size={16} />
+                            <ExternalLink size={12} />
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-fern-600 to-blue-600 text-white">
+        <section className="py-20 bg-background">
           <div className="container px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-pixel mb-4">Ready to start building?</h2>
-              <p className="text-xl mb-8 font-pixel-text">
-                Fern makes it easy to create interactive graphics applications with {language === 'cpp' ? 'modern C++' : 'simple C'} code.
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-4xl md:text-5xl font-pixel mb-6 text-foreground">Ready to Build Something Amazing?</h2>
+              <p className="text-xl mb-8 leading-relaxed text-muted-foreground">
+                Join the FernKit ecosystem. Start with any tool that speaks to you, 
+                or plant the entire garden and watch your projects flourish.
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button asChild size="lg" className="gap-2 btn-pixel bg-white text-fern-600 hover:bg-gray-100 shadow-lg">
-                  <Link to="/docs" className="!text-fern-600">
-                    Get Started
-                    <ArrowRight size={18} />
+              <div className="flex flex-wrap gap-6 justify-center">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="gap-3 text-white text-lg px-8 py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1 active:translate-x-2 active:translate-y-2"
+                  style={{ 
+                    backgroundColor: 'var(--fern-green)', 
+                    border: '2px solid #2d4a2d',
+                    boxShadow: '4px 4px 0px #2d4a2d'
+                  }}
+                >
+                  <Link to="/quick-start" className="!text-white">
+                    <Leaf size={20} />
+                    Quick Start Guide
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="gap-2 btn-pixel border-white text-white hover:bg-white/10">
-                  <a href="https://github.com/RishiAhuja/fern" target="_blank" rel="noopener noreferrer">
-                    <Code size={18} />
-                    View on GitHub
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="gap-3 text-lg px-8 py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1 active:translate-x-2 active:translate-y-2"
+                  style={{ 
+                    backgroundColor: 'white', 
+                    color: 'var(--fern-green)',
+                    border: '2px solid var(--fern-green)',
+                    boxShadow: '4px 4px 0px var(--fern-green)'
+                  }}
+                >
+                  <a href="https://github.com/fernkit" target="_blank" rel="noopener noreferrer">
+                    <Github size={20} />
+                    Explore on GitHub
                   </a>
                 </Button>
               </div>
