@@ -404,15 +404,15 @@ int main() {
 
         {/* Mobile Navigation Toggle */}
         <div className="lg:hidden fixed top-16 left-0 right-0 bg-white border-b border-gray-200 z-10">
-          <div className="p-4">
+          <div className="p-3 sm:p-4">
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium w-full"
             >
               <BookOpen size={16} />
               <span>Documentation Menu</span>
               <svg 
-                className={`w-4 h-4 transition-transform ${mobileMenuOpen ? 'rotate-180' : ''}`} 
+                className={`w-4 h-4 transition-transform ml-auto ${mobileMenuOpen ? 'rotate-180' : ''}`} 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -424,12 +424,12 @@ int main() {
           
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="bg-gray-50 border-t border-gray-200 max-h-80 overflow-y-auto">
-              <div className="p-4">
-                <nav className="space-y-2">
+            <div className="bg-gray-50 border-t border-gray-200 max-h-96 overflow-y-auto">
+              <div className="p-3 sm:p-4">
+                <nav className="space-y-1 sm:space-y-2">
                   {docStructure.map(item => renderDocItem(item))}
                 </nav>
-                <div className="mt-6 pt-4 border-t border-gray-200">
+                <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200">
                   <a 
                     href="https://github.com/fernkit/fern" 
                     target="_blank" 
@@ -446,9 +446,9 @@ int main() {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-4 lg:p-8 max-w-5xl mx-auto lg:ml-72 w-full lg:pt-0 pt-16">
+        <div className="flex-1 p-3 sm:p-4 lg:p-8 max-w-5xl mx-auto lg:ml-72 w-full lg:pt-0 pt-12 sm:pt-16">
           {/* Mobile Back Button */}
-          <div className="lg:hidden mb-6">
+          <div className="lg:hidden mb-4 sm:mb-6">
             <Link 
               to="/" 
               className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"

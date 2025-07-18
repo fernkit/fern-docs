@@ -98,31 +98,7 @@ const Footer = () => {
           </div>
         </div>
         
-        {/* Philosophy */}
-        <div className="mt-12 pt-8 border-t" style={{ borderColor: 'rgba(69, 113, 67, 0.2)' }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            <div className="group">
-              <BookOpen size={20} className="mx-auto mb-2 transition-colors" style={{ color: 'var(--fern-green)' }} />
-              <h4 className="font-pixel text-sm text-gray-900 dark:text-gray-100 mb-1">Built to Teach</h4>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Transparent learning tools</p>
-            </div>
-            <div className="group">
-              <Leaf size={20} className="mx-auto mb-2 transition-colors" style={{ color: 'var(--fern-green)' }} />
-              <h4 className="font-pixel text-sm text-gray-900 dark:text-gray-100 mb-1">Imperfect & Evolving</h4>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Embracing authentic growth</p>
-            </div>
-            <div className="group">
-              <Network size={20} className="mx-auto mb-2 transition-colors" style={{ color: 'var(--fern-green)' }} />
-              <h4 className="font-pixel text-sm text-gray-900 dark:text-gray-100 mb-1">Thematically Cohesive</h4>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Nature-guided architecture</p>
-            </div>
-            <div className="group">
-              <Terminal size={20} className="mx-auto mb-2 transition-colors" style={{ color: 'var(--fern-green)' }} />
-              <h4 className="font-pixel text-sm text-gray-900 dark:text-gray-100 mb-1">Minimal & Composable</h4>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Lean, understandable code</p>
-            </div>
-          </div>
-        </div>
+        
         
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t flex flex-col md:flex-row items-center justify-between gap-4" style={{ borderColor: 'rgba(69, 113, 67, 0.2)' }}>

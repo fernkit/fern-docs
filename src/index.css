@@ -410,3 +410,82 @@
   z-index: -1;
   pointer-events: none;
 }
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 100%;
+  }
+  
+  /* Prevent horizontal overflow */
+  body {
+    overflow-x: hidden;
+  }
+  
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Better button spacing on mobile */
+  .flex.flex-wrap.gap-6 {
+    gap: 1rem;
+  }
+  
+  /* Improved text rendering on small screens */
+  .font-pixel {
+    letter-spacing: 0.05em;
+  }
+  
+  /* Prevent text overflow in cards */
+  .break-all {
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+  
+  .break-words {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Ensure grid items don't overflow */
+  .grid > * {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* Responsive grid improvements */
+@media (min-width: 640px) and (max-width: 768px) {
+  .grid.grid-cols-1.sm\\:grid-cols-2.xl\\:grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Touch improvements for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .transition-transform.hover\\:translate-x-1.hover\\:translate-y-1 {
+    transform: none;
+  }
+  
+  .transition-transform.hover\\:translate-x-1.hover\\:translate-y-1:active {
+    transform: translate(2px, 2px);
+  }
+}
+
+/* Ensure no elements cause horizontal scroll */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.container {
+  max-width: 100%;
+  overflow: hidden;
+}

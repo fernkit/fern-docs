@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./hooks/useLanguageContext";
 import Index from "./pages/Index";
 import DocsRenderer from "./pages/DocsRenderer";
+import QuickStart from "./pages/QuickStart";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,6 +21,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/quick-start" element={<QuickStart />} />
             <Route path="/docs" element={<DocsRenderer />} />
             <Route path="/docs/*" element={<DocsRenderer />} />
             <Route path="*" element={<NotFound />} />

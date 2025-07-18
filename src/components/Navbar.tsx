@@ -16,12 +16,12 @@ const Navbar = () => {
             <img 
               src="/logo/fern.png" 
               alt="FernKit" 
-              className="h-8 w-8 pixelated transition-transform group-hover:scale-110" 
+              className="h-7 w-7 sm:h-8 sm:w-8 pixelated transition-transform group-hover:scale-110" 
               style={{
                 imageRendering: 'pixelated'
               }}
             />
-            <span className="font-pixel text-lg text-gray-900 dark:text-gray-100 hidden sm:inline-block">
+            <span className="font-pixel text-base sm:text-lg text-gray-900 dark:text-gray-100 hidden sm:inline-block">
               <span>Fern</span>Kit
             </span>
           </Link>
