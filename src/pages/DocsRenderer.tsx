@@ -135,9 +135,8 @@ const DocsRenderer = () => {
       // Convert path to actual file path
       const filePath = path.replace(/\//g, '/') + '.md';
       
-      // In a real implementation, you'd fetch from a backend API
-      // For now, we'll simulate with the actual file content structure
-      const response = await fetch(`/docs/${filePath}`);
+      // CORRECTED LINE: Fetch from '/content/' instead of '/docs/' to avoid routing conflicts.
+      const response = await fetch(`/content/${filePath}`);
       
       if (!response.ok) {
         throw new Error(`Failed to load ${filePath}`);
