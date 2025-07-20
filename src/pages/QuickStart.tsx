@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Github, Code2, Layers, Network, Terminal, Zap, Leaf, BookOpen, ExternalLink, Download, Play, Wrench } from "lucide-react";
+import { ArrowLeft, Github, BookOpen, ExternalLink, Download, Play, Wrench, Terminal } from "lucide-react";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -114,22 +114,20 @@ fern fire my_app.cpp -p web      # For WebAssembly`
         <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
             <Navbar />
 
-            <main className="flex-grow overflow-x-hidden">
+            <main className="flex-grow">
                 {/* Hero Section */}
-                <section className="relative overflow-hidden border-b border-border/20" style={{
+                <section className="relative overflow-hidden border-b border-border/20 py-16 sm:py-20 md:py-24" style={{
                     background: `linear-gradient(135deg, #F8FAF5 0%, #F8FAF5 100%)`,
                 }}>
-                    {/* Simple grid background */}
                     <div className="absolute inset-0 opacity-10">
                         <div className="w-full h-full" style={{
                             backgroundImage: `linear-gradient(to right, var(--fern-green) 1px, transparent 1px), linear-gradient(to bottom, var(--fern-green) 1px, transparent 1px)`,
                             backgroundSize: '40px 40px'
                         }}></div>
                     </div>
-
-                    <div className="container px-4 py-16 sm:py-20 md:py-24 relative z-10 max-w-full">
+                    
+                    <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="max-w-4xl mx-auto">
-                            {/* Back Link */}
                             <div className="mb-8">
                                 <Link
                                     to="/"
@@ -146,17 +144,13 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                                         src="/logo/fern.png"
                                         alt="FernKit Logo"
                                         className="h-16 w-16 sm:h-20 sm:w-20 pixelated"
-                                        style={{
-                                            imageRendering: 'pixelated'
-                                        }}
+                                        style={{ imageRendering: 'pixelated' }}
                                     />
                                 </div>
-
                                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-pixel text-gray-900 mb-4 sm:mb-6 leading-tight break-words">
                                     Quick <span style={{ color: 'var(--fern-green)' }}>Start</span> Guide
                                 </h1>
-
-                                <p className="text-lg sm:text-xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed px-2">
+                                <p className="text-lg sm:text-xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed">
                                     Get up and running with FernKit in minutes. Build your first pixel-perfect application from scratch.
                                 </p>
                             </div>
@@ -165,13 +159,13 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                 </section>
 
                 {/* Steps Section */}
-                <section className="py-16 sm:py-20 bg-background overflow-hidden">
-                    <div className="container px-4 max-w-6xl mx-auto">
+                <section className="py-16 sm:py-20 bg-background">
+                    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-12 sm:mb-16">
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-pixel mb-4 sm:mb-6 text-foreground px-2">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-pixel mb-4 sm:mb-6 text-foreground">
                                 Getting Started
                             </h2>
-                            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+                            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
                                 Follow these steps to set up your development environment and create your first FernKit application.
                             </p>
                         </div>
@@ -180,11 +174,10 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                             {steps.map((step, index) => (
                                 <div
                                     key={step.title}
-                                    className="group relative bg-white/95 rounded-lg border p-6 sm:p-8 transition-all duration-300 hover:shadow-md w-full"
+                                    className="group relative bg-white/95 rounded-lg border p-6 sm:p-8 transition-all duration-300 hover:shadow-md"
                                     style={{ borderColor: 'rgba(69, 113, 67, 0.1)' }}
                                 >
                                     <div className="flex items-start gap-4 sm:gap-6">
-                                        {/* Step Number & Icon */}
                                         <div className="flex-shrink-0">
                                             <div
                                                 className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-white font-pixel text-lg sm:text-xl mb-3"
@@ -199,50 +192,25 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                                                 <step.icon size={20} style={{ color: 'var(--fern-green)' }} />
                                             </div>
                                         </div>
-
-                                        {/* Content */}
                                         <div className="flex-1 min-w-0">
                                             <h3 className="text-xl sm:text-2xl font-pixel mb-4 text-foreground break-words">
                                                 {step.title}
                                             </h3>
                                             <div className="text-sm sm:text-base text-gray-600 leading-relaxed space-y-4">
                                                 {step.content.split('\n\n').map((paragraph, idx) => {
-                                                    // Check if this paragraph contains code (has specific patterns)
-                                                    const codePatterns = [
-                                                        'git clone', '#include', './', 'fern fire', 'echo ', 'chmod +x',
-                                                        'source ', 'cd ', './emsdk', 'using namespace', 'int main()',
-                                                        'void ', 'auto ', 'Fern::', 'Draw::', 'Colors::', 'Button(',
-                                                        'addWidget', 'initialize()', 'startRenderLoop()', 'setDrawCallback'
-                                                    ];
-
+                                                    const codePatterns = ['git clone', '#include', './', 'fern fire', 'echo ', 'chmod +x', 'source ', 'cd ', './emsdk', 'using namespace', 'int main()', 'void ', 'auto ', 'Fern::', 'Draw::', 'Colors::', 'Button(', 'addWidget', 'initialize()', 'startRenderLoop()', 'setDrawCallback'];
                                                     const isCode = codePatterns.some(pattern => paragraph.includes(pattern));
 
                                                     if (isCode) {
                                                         return (
                                                             <div key={idx} className="relative">
-<pre
-  className="p-4 rounded-lg text-sm font-mono overflow-x-auto border whitespace-pre-wrap break-words"
-  style={{
-    backgroundColor: '#f9fafb',    // Uniform light background
-    borderColor: '#cbd5e1',        // Light slate border
-    color: '#0f172a',
-    fontFamily: 'JetBrains Mono, Consolas, Menlo, monospace',
-    lineHeight: '1.5',
-    fontSize: '13.5px',
-  }}
->
-  {paragraph}
-</pre>
-
-
+                                                                <pre className="p-4 rounded-lg text-sm font-mono overflow-x-auto border whitespace-pre-wrap break-words" style={{ backgroundColor: '#f9fafb', borderColor: '#cbd5e1', color: '#0f172a', fontFamily: 'JetBrains Mono, Consolas, Menlo, monospace', lineHeight: '1.5', fontSize: '13.5px' }}>
+                                                                    {paragraph}
+                                                                </pre>
                                                             </div>
                                                         );
                                                     }
-                                                    return (
-                                                        <div key={idx} className="whitespace-pre-wrap">
-                                                            {paragraph}
-                                                        </div>
-                                                    );
+                                                    return <div key={idx} className="whitespace-pre-wrap">{paragraph}</div>;
                                                 })}
                                             </div>
                                         </div>
@@ -254,19 +222,18 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                 </section>
 
                 {/* Next Steps Section */}
-                <section className="py-16 sm:py-20 bg-gray-50 overflow-hidden">
-                    <div className="container px-4 max-w-6xl mx-auto">
+                <section className="py-16 sm:py-20 bg-gray-50">
+                    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-12 sm:mb-16">
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-pixel mb-4 sm:mb-6 text-foreground px-2">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-pixel mb-4 sm:mb-6 text-foreground">
                                 What's Next?
                             </h2>
-                            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
+                            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
                                 Now that you have FernKit running, here are some great next steps to deepen your understanding.
                             </p>
                         </div>
-
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-                            {nextSteps.map((step, index) => (
+                            {nextSteps.map((step) => (
                                 <div
                                     key={step.title}
                                     className="bg-white rounded-lg border p-6 transition-all duration-300 hover:shadow-md h-full flex flex-col"
@@ -285,18 +252,9 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors text-sm font-medium"
-                                                style={{
-                                                    borderColor: 'var(--fern-green)',
-                                                    color: 'var(--fern-green)'
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    e.currentTarget.style.backgroundColor = 'var(--fern-green)';
-                                                    e.currentTarget.style.color = 'white';
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.currentTarget.style.backgroundColor = '';
-                                                    e.currentTarget.style.color = 'var(--fern-green)';
-                                                }}
+                                                style={{ borderColor: 'var(--fern-green)', color: 'var(--fern-green)' }}
+                                                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--fern-green)'; e.currentTarget.style.color = 'white'; }}
+                                                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.color = 'var(--fern-green)'; }}
                                             >
                                                 {step.linkText}
                                                 <ExternalLink size={14} />
@@ -305,18 +263,9 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                                             <Link
                                                 to={step.link}
                                                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors text-sm font-medium"
-                                                style={{
-                                                    borderColor: 'var(--fern-green)',
-                                                    color: 'var(--fern-green)'
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    e.currentTarget.style.backgroundColor = 'var(--fern-green)';
-                                                    e.currentTarget.style.color = 'white';
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.currentTarget.style.backgroundColor = '';
-                                                    e.currentTarget.style.color = 'var(--fern-green)';
-                                                }}
+                                                style={{ borderColor: 'var(--fern-green)', color: 'var(--fern-green)' }}
+                                                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--fern-green)'; e.currentTarget.style.color = 'white'; }}
+                                                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.color = 'var(--fern-green)'; }}
                                             >
                                                 {step.linkText}
                                             </Link>
@@ -329,43 +278,23 @@ fern fire my_app.cpp -p web      # For WebAssembly`
                 </section>
 
                 {/* CTA Section */}
-                <section className="py-16 sm:py-20 bg-background overflow-hidden">
-                    <div className="container px-4 max-w-4xl mx-auto">
+                <section className="py-16 sm:py-20 bg-background">
+                    <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                         <div className="text-center">
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-pixel mb-4 sm:mb-6 text-foreground px-2 break-words">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-pixel mb-4 sm:mb-6 text-foreground break-words">
                                 Ready to Build Something Amazing?
                             </h2>
-                            <p className="text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed text-gray-600 px-4 max-w-3xl mx-auto">
-                                You now have everything you need to start building with FernKit.
-                                Create something beautiful, share it with the community, and help FernKit grow.
+                            <p className="text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed text-gray-600 max-w-3xl mx-auto">
+                                You now have everything you need to start building with FernKit. Create something beautiful, share it with the community, and help FernKit grow.
                             </p>
-                            <div className="flex flex-col gap-3 sm:gap-4 justify-center items-stretch max-w-md mx-auto sm:max-w-none sm:flex-row sm:items-center px-4">
-                                <Button
-                                    asChild
-                                    size="lg"
-                                    className="gap-2 sm:gap-3 text-white text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1"
-                                    style={{
-                                        backgroundColor: 'var(--fern-green)',
-                                        border: '2px solid #2d4a2d',
-                                        boxShadow: '4px 4px 0px #2d4a2d'
-                                    }}
-                                >
+                            <div className="flex flex-col gap-3 sm:gap-4 justify-center items-stretch max-w-md mx-auto sm:max-w-none sm:flex-row sm:items-center">
+                                <Button asChild size="lg" className="gap-2 sm:gap-3 text-white text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1" style={{ backgroundColor: 'var(--fern-green)', border: '2px solid #2d4a2d', boxShadow: '4px 4px 0px #2d4a2d' }}>
                                     <Link to="/docs" className="!text-white flex items-center gap-2 sm:gap-3 justify-center">
                                         <BookOpen size={16} />
                                         <span>Explore Documentation</span>
                                     </Link>
                                 </Button>
-                                <Button
-                                    asChild
-                                    size="lg"
-                                    className="gap-2 sm:gap-3 text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1"
-                                    style={{
-                                        backgroundColor: 'white',
-                                        color: 'var(--fern-green)',
-                                        border: '2px solid var(--fern-green)',
-                                        boxShadow: '4px 4px 0px var(--fern-green)'
-                                    }}
-                                >
+                                <Button asChild size="lg" className="gap-2 sm:gap-3 text-sm sm:text-base px-4 sm:px-6 py-3 sm:py-4 font-pixel transition-transform hover:translate-x-1 hover:translate-y-1" style={{ backgroundColor: 'white', color: 'var(--fern-green)', border: '2px solid var(--fern-green)', boxShadow: '4px 4px 0px var(--fern-green)' }}>
                                     <a href="https://github.com/fernkit/fern" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 sm:gap-3 justify-center">
                                         <Github size={16} />
                                         <span>View on GitHub</span>
