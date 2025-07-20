@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
-    <header className="border-b bg-white/95 dark:bg-gray-950/95 sticky top-0 z-40">
+    // CORRECTED: Changed 'sticky' to 'fixed' and ensured it spans the full width.
+    <header className="border-b bg-white/95 backdrop-blur-sm dark:bg-gray-950/95 fixed top-0 left-0 right-0 z-50">
       
       <div className="container flex items-center justify-between h-16 px-4 md:px-6">
         <div className="flex items-center gap-3">
