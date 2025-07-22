@@ -2,16 +2,6 @@
 
 The `ColumnWidget` arranges child widgets vertically in a column, providing flexible control over spacing, alignment, and sizing. It's one of the core layout widgets in Fern UI.
 
-## Table of Contents
-- [Basic Usage](#basic-usage)
-- [Alignment](#alignment)
-- [Flexible Sizing](#flexible-sizing)
-- [Spacing](#spacing)
-- [Advanced Features](#advanced-features)
-- [Examples](#examples)
-- [Best Practices](#best-practices)
-- [Troubleshooting](#troubleshooting)
-
 ## Basic Usage
 
 ### Creating a Column

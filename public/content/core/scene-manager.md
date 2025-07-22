@@ -2,17 +2,6 @@
 
 The Scene Manager in Fern provides a powerful system for organizing your application into discrete scenes or screens. This is particularly useful for games, multi-screen applications, or any application that needs to switch between different UI states.
 
-## Table of Contents
-- [Overview](#overview)
-- [Basic Concepts](#basic-concepts)
-- [Getting Started](#getting-started)
-- [Scene Lifecycle](#scene-lifecycle)
-- [Scene Navigation](#scene-navigation)
-- [Advanced Features](#advanced-features)
-- [Examples](#examples)
-- [Best Practices](#best-practices)
-- [API Reference](#api-reference)
-
 ## Overview
 
 The Scene Manager allows you to:

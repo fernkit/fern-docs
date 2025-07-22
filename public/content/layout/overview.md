@@ -2,14 +2,6 @@
 
 Fern's layout system provides powerful and flexible tools for organizing widgets in your application. The system is based on composable layout widgets that can be nested to create complex UI structures.
 
-## Table of Contents
-- [Core Concepts](#core-concepts)
-- [Layout Widgets](#layout-widgets)
-- [Basic Usage](#basic-usage)
-- [Advanced Patterns](#advanced-patterns)
-- [Examples](#examples)
-- [Best Practices](#best-practices)
-
 ## Core Concepts
 
 ### Layout Philosophy
@@ -105,14 +97,14 @@ std::vector<std::shared_ptr<Widget>> mainColumn = {
     SizedBox(0, 30),
     Text(Point(0, 0), "Choose an action:", 2, Colors::Gray),
     SizedBox(0, 20),
-    Row(buttonRow)  // Nested row inside column
+    Row(buttonRow, false, MainAxisAlignment::Center)  // Nested row inside column
 };
 
 // Center everything
 int width = Fern::getWidth();
 int height = Fern::getHeight();
 auto centerWidget = std::make_shared<CenterWidget>(0, 0, width, height);
-centerWidget->add(Column(mainColumn));
+centerWidget->add(Column(mainColumn, false, MainAxisAlignment::Center, CrossAxisAlignment::Center));
 
 addWidget(centerWidget);
 ```
@@ -121,36 +113,50 @@ addWidget(centerWidget);
 
 ### Responsive Design
 ```cpp
-void createResponsiveLayout() {
+void setupResponsiveUI() {
+    // Clear existing widgets
+    WidgetManager::getInstance().clear();
+    
     int screenWidth = Fern::getWidth();
-    int screenHeight = Fern::getHeight();
-    
-    // Adjust button size based on screen width
     int buttonWidth = std::min(200, screenWidth - 40);
-    int buttonHeight = 50;
     
-    // Choose layout based on screen size
     if (screenWidth > 600) {
-        // Wide screen: use row layout
-        std::vector<std::shared_ptr<Widget>> buttons = {
-            Button(ButtonConfig(0, 0, buttonWidth, buttonHeight, "Action 1")),
+        // Wide screen: horizontal layout
+        auto layout = Row({
+            Button(ButtonConfig(0, 0, buttonWidth, 50, "Action 1")),
             SizedBox(20, 0),
-            Button(ButtonConfig(0, 0, buttonWidth, buttonHeight, "Action 2"))
-        };
-        
-        auto layout = Row(buttons);
-        // Add to center widget...
+            Button(ButtonConfig(0, 0, buttonWidth, 50, "Action 2"))
+        });
+        addWidget(Center(layout, true));
     } else {
-        // Narrow screen: use column layout
-        std::vector<std::shared_ptr<Widget>> buttons = {
-            Button(ButtonConfig(0, 0, buttonWidth, buttonHeight, "Action 1")),
+        // Narrow screen: vertical layout
+        auto layout = Column({
+            Button(ButtonConfig(0, 0, buttonWidth, 50, "Action 1")),
             SizedBox(0, 15),
-            Button(ButtonConfig(0, 0, buttonWidth, buttonHeight, "Action 2"))
-        };
-        
-        auto layout = Column(buttons);
-        // Add to center widget...
+            Button(ButtonConfig(0, 0, buttonWidth, 50, "Action 2"))
+        });
+        addWidget(Center(layout, true));
     }
+}
+
+void draw() {
+    Draw::fill(0xFF2A2A2A); // Dark gray background
+}
+
+int main() {
+    Fern::initialize(680, 420);
+    
+    // Set up initial UI
+    setupResponsiveUI();
+    
+    // Rebuild UI when window is resized
+    Fern::setWindowResizeCallback([](int width, int height) {
+        setupResponsiveUI();
+    });
+    
+    Fern::setDrawCallback(draw);
+    Fern::startRenderLoop();
+    return 0;
 }
 ```
 
@@ -196,8 +202,8 @@ void createGridLayout() {
 ```cpp
 void createFormLayout() {
     // Create form fields
-    auto nameField = TextInput(TextInputConfig(0, 0, 300, 40, "Enter your name"));
-    auto emailField = TextInput(TextInputConfig(0, 0, 300, 40, "Enter your email"));
+    auto nameField = TextInput(TextInputConfig(0, 0, 300, 40).placeholder("Enter your name"));
+    auto emailField = TextInput(TextInputConfig(0, 0, 300, 40).placeholder("Enter your email"));
     
     // Create form
     std::vector<std::shared_ptr<Widget>> form = {
@@ -224,229 +230,6 @@ void createFormLayout() {
     centerWidget->add(Column(form));
     
     addWidget(centerWidget);
-}
-```
-
-## Examples
-
-### Example 1: Dashboard Layout
-```cpp
-#include <fern/fern.hpp>
-#include <iostream>
-
-using namespace Fern;
-
-void setupUI() {
-    // Header
-    auto header = Text(Point(0, 0), "Dashboard", 4, Colors::White);
-    
-    // Stats row
-    auto createStatCard = [](const std::string& title, const std::string& value) {
-        std::vector<std::shared_ptr<Widget>> card = {
-            Text(Point(0, 0), title, 2, Colors::Gray),
-            SizedBox(0, 10),
-            Text(Point(0, 0), value, 3, Colors::White)
-        };
-        return Column(card);
-    };
-    
-    std::vector<std::shared_ptr<Widget>> statsRow = {
-        createStatCard("Users", "1,234"),
-        SizedBox(40, 0),
-        createStatCard("Orders", "567"),
-        SizedBox(40, 0),
-        createStatCard("Revenue", "$12,345")
-    };
-    
-    // Action buttons
-    std::vector<std::shared_ptr<Widget>> actionRow = {
-        Button(ButtonConfig(0, 0, 120, 40, "View Reports")),
-        SizedBox(20, 0),
-        Button(ButtonConfig(0, 0, 120, 40, "Settings"))
-    };
-    
-    // Main layout
-    std::vector<std::shared_ptr<Widget>> mainLayout = {
-        header,
-        SizedBox(0, 40),
-        Row(statsRow),
-        SizedBox(0, 50),
-        Row(actionRow)
-    };
-    
-    int width = Fern::getWidth();
-    int height = Fern::getHeight();
-    auto centerWidget = std::make_shared<CenterWidget>(0, 0, width, height);
-    centerWidget->add(Column(mainLayout));
-    
-    addWidget(centerWidget);
-}
-
-void draw() {
-    Draw::fill(Colors::DarkBlue);
-}
-
-int main() {
-    Fern::initialize();
-    setupUI();
-    Fern::setDrawCallback(draw);
-    Fern::startRenderLoop();
-    return 0;
-}
-```
-
-### Example 2: Navigation Menu
-```cpp
-#include <fern/fern.hpp>
-#include <iostream>
-
-using namespace Fern;
-
-void setupUI() {
-    // Navigation buttons
-    auto createNavButton = [](const std::string& text) {
-        ButtonStyle style;
-        style.normalColor(Colors::DarkGray)
-             .hoverColor(Colors::LightGray)
-             .pressColor(Colors::Gray)
-             .textColor(Colors::White)
-             .textScale(2);
-        
-        auto button = Button(ButtonConfig(0, 0, 150, 50, text).style(style));
-        button->onClick.connect([text]() {
-            std::cout << "Navigating to: " << text << std::endl;
-        });
-        return button;
-    };
-    
-    // Create navigation menu
-    std::vector<std::shared_ptr<Widget>> navMenu = {
-        Text(Point(0, 0), "Navigation", 3, Colors::White),
-        SizedBox(0, 30),
-        createNavButton("Home"),
-        SizedBox(0, 15),
-        createNavButton("Products"),
-        SizedBox(0, 15),
-        createNavButton("About"),
-        SizedBox(0, 15),
-        createNavButton("Contact")
-    };
-    
-    // Content area
-    std::vector<std::shared_ptr<Widget>> content = {
-        Text(Point(0, 0), "Main Content", 3, Colors::White),
-        SizedBox(0, 20),
-        Text(Point(0, 0), "Welcome to our application!", 2, Colors::Gray),
-        SizedBox(0, 20),
-        Text(Point(0, 0), "Select a navigation item from the left.", 2, Colors::Gray)
-    };
-    
-    // Main layout (simulated two-column)
-    std::vector<std::shared_ptr<Widget>> leftColumn = {
-        Column(navMenu)
-    };
-    
-    std::vector<std::shared_ptr<Widget>> rightColumn = {
-        Column(content)
-    };
-    
-    std::vector<std::shared_ptr<Widget>> mainRow = {
-        Column(leftColumn),
-        SizedBox(80, 0),  // Gap between columns
-        Column(rightColumn)
-    };
-    
-    int width = Fern::getWidth();
-    int height = Fern::getHeight();
-    auto centerWidget = std::make_shared<CenterWidget>(0, 0, width, height);
-    centerWidget->add(Row(mainRow));
-    
-    addWidget(centerWidget);
-}
-
-void draw() {
-    Draw::fill(Colors::Black);
-}
-
-int main() {
-    Fern::initialize();
-    setupUI();
-    Fern::setDrawCallback(draw);
-    Fern::startRenderLoop();
-    return 0;
-}
-```
-
-### Example 3: Settings Panel
-```cpp
-#include <fern/fern.hpp>
-#include <iostream>
-
-using namespace Fern;
-
-void setupUI() {
-    // Settings section helper
-    auto createSettingsSection = [](const std::string& title, 
-                                   const std::vector<std::shared_ptr<Widget>>& controls) {
-        std::vector<std::shared_ptr<Widget>> section = {
-            Text(Point(0, 0), title, 2, Colors::LightBlue),
-            SizedBox(0, 15)
-        };
-        
-        // Add controls
-        for (const auto& control : controls) {
-            section.push_back(control);
-            section.push_back(SizedBox(0, 10));
-        }
-        
-        return Column(section);
-    };
-    
-    // Audio controls
-    std::vector<std::shared_ptr<Widget>> audioControls = {
-        Text(Point(0, 0), "Volume: 50%", 2, Colors::White),
-        Text(Point(0, 0), "Quality: High", 2, Colors::White)
-    };
-    
-    // Display controls
-    std::vector<std::shared_ptr<Widget>> displayControls = {
-        Text(Point(0, 0), "Resolution: 1920x1080", 2, Colors::White),
-        Text(Point(0, 0), "Fullscreen: Enabled", 2, Colors::White)
-    };
-    
-    // Main settings layout
-    std::vector<std::shared_ptr<Widget>> settings = {
-        Text(Point(0, 0), "Settings", 4, Colors::White),
-        SizedBox(0, 40),
-        createSettingsSection("Audio", audioControls),
-        SizedBox(0, 30),
-        createSettingsSection("Display", displayControls),
-        SizedBox(0, 40),
-        Row({
-            Button(ButtonConfig(0, 0, 100, 40, "Save")),
-            SizedBox(20, 0),
-            Button(ButtonConfig(0, 0, 100, 40, "Reset"))
-        })
-    };
-    
-    int width = Fern::getWidth();
-    int height = Fern::getHeight();
-    auto centerWidget = std::make_shared<CenterWidget>(0, 0, width, height);
-    centerWidget->add(Column(settings));
-    
-    addWidget(centerWidget);
-}
-
-void draw() {
-    Draw::fill(Colors::DarkGray);
-}
-
-int main() {
-    Fern::initialize();
-    setupUI();
-    Fern::setDrawCallback(draw);
-    Fern::startRenderLoop();
-    return 0;
 }
 ```
 
@@ -587,13 +370,3 @@ std::shared_ptr<Widget> createToolbar(const std::vector<std::shared_ptr<Widget>>
 - Test on different screen sizes
 - Use relative sizing where possible
 - Consider different layout strategies for different screen sizes
-
----
-
-**Related Documentation:**
-- [Column Layout](column.md)
-- [Row Layout](row.md)
-- [Center Layout](center.md)
-- [Container System](containers.md)
-- [Button Widget](../widgets/button.md)
-- [Text Widget](../widgets/text.md)

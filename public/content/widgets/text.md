@@ -64,7 +64,7 @@ While the simple constructor is great for quick text, Fern provides a powerful c
 ```cpp
 // Create a text style
 TextStyle style;
-style.color(Colors::CornflowerBlue)
+style.color(Colors::Amber)
      .fontSize(3)
      .useBitmapFont()
      .backgroundColor(Colors::DarkGray)
@@ -101,7 +101,7 @@ Bitmap fonts store each character as a fixed-size pixel pattern. Think of them l
 TextStyle retro;
 retro.useBitmapFont()
      .fontSize(4)  // 4x scale of base pixel pattern
-     .color(Colors::LimeGreen);
+     .color(Colors::Lime);
 
 auto pixelText = Text(TextConfig(50, 50, "PIXEL PERFECT").style(retro));
 ```
@@ -127,12 +127,7 @@ std::cout << "Loading TTF fonts..." << std::endl;
 
 // Try to load fonts from common system locations
 std::vector<std::pair<std::string, std::string>> fontOptions = {
-    {"liberation", "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"},
-    {"dejavu", "/usr/share/fonts/TTF/DejaVuSans.ttf"},
-    {"ubuntu", "/usr/share/fonts/truetype/ubuntu/Ubuntu-Regular.ttf"},
-    {"arial", "/System/Library/Fonts/Arial.ttf"},           // macOS
-    {"arial", "C:\\Windows\\Fonts\\arial.ttf"},            // Windows
-    {"custom", "assets/fonts/roboto.ttf"}                  // Your custom fonts
+    {"roboto", "assets/Roboto-Black.ttf"},           // Your custom fonts
 };
 
 std::string loadedFontName = "";
@@ -196,29 +191,7 @@ if (!loadedFontName.empty()) {
 - **Memory usage**: Each font size creates new glyph caches
 - **Slower than bitmap**: Significantly more CPU-intensive than bitmap fonts
 
-#### Platform-Specific Font Installation
-
-**Linux (Ubuntu/Debian):**
-```bash
-# Install common fonts
-sudo apt install fonts-liberation fonts-dejavu-core ttf-ubuntu-font-family
-
-# Check available fonts
-fc-list | grep -i liberation
-```
-
-**Linux (Arch):**
-```bash
-# Install font packages
-sudo pacman -S ttf-liberation ttf-dejavu ttf-ubuntu-font-family
-
-# Or install to user directory
-mkdir -p ~/.local/share/fonts
-cp your-font.ttf ~/.local/share/fonts/
-fc-cache -fv
-```
-
-**Manual Font Installation:**
+**Manual Font in Assets:**
 ```cpp
 // Copy font files to your project
 // project/
@@ -230,51 +203,6 @@ fc-cache -fv
 // Load from project directory
 Font::loadTTFFont("roboto", "assets/fonts/roboto.ttf");
 Font::loadTTFFont("opensans", "assets/fonts/opensans.ttf");
-```
-
-#### Recommended TTF Usage Strategy
-
-```cpp
-class FontManager {
-public:
-    static bool initializeFonts() {
-        // Try to load at least one TTF font
-        std::vector<std::pair<std::string, std::string>> fonts = {
-            {"main", "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"},
-            {"main", "assets/fonts/roboto.ttf"},
-            {"fallback", "/usr/share/fonts/TTF/DejaVuSans.ttf"}
-        };
-        
-        for (const auto& font : fonts) {
-            if (Font::loadTTFFont(font.first, font.second)) {
-                Font::setDefaultTTFFont(font.first);
-                ttfAvailable_ = true;
-                std::cout << "TTF font loaded successfully" << std::endl;
-                return true;
-            }
-        }
-        
-        std::cout << "No TTF fonts available - using bitmap fallback" << std::endl;
-        ttfAvailable_ = false;
-        return false;
-    }
-    
-    static TextStyle createStyle(int size, uint32_t color) {
-        TextStyle style;
-        if (ttfAvailable_ && size >= 16) {
-            // Use TTF for larger text
-            style.useTTFFont().fontSize(size).color(color);
-        } else {
-            // Use bitmap for small text or when TTF unavailable
-            int bitmapSize = std::max(1, size / 8); // Rough conversion
-            style.useBitmapFont().fontSize(bitmapSize).color(color);
-        }
-        return style;
-    }
-
-private:
-    static bool ttfAvailable_;
-};
 ```
 
 **TTF Font Reality Check:**
@@ -545,7 +473,7 @@ auto text = Text(Point(100, 50), "Readable", 2, Colors::White); // Size 2 is goo
 ```cpp
 // Always check if font loading succeeded
 std::string fontName = "liberation";
-std::string fontPath = "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf";
+std::string fontPath = "assets/liberation/LiberationSans-Regular.ttf";
 
 if (Font::loadTTFFont(fontName, fontPath)) {
     std::cout << "Font loaded successfully" << std::endl;
@@ -566,7 +494,7 @@ if (Font::loadTTFFont(fontName, fontPath)) {
 **Common TTF Problems:**
 
 1. **Font file not found**:
-   - Check the exact file path exists
+   - Check the exact file path exists in the root of project
    - Verify file permissions are readable
    - Install required font packages on your system
 
@@ -584,8 +512,8 @@ if (Font::loadTTFFont(fontName, fontPath)) {
    - Bold/italic variants require separate font files
    - Load each style variant separately:
    ```cpp
-   Font::loadTTFFont("liberation-bold", "/path/to/LiberationSans-Bold.ttf");
-   Font::loadTTFFont("liberation-italic", "/path/to/LiberationSans-Italic.ttf");
+   Font::loadTTFFont("liberation-bold", "path/to/LiberationSans-Bold.ttf");
+   Font::loadTTFFont("liberation-italic", "path/to/LiberationSans-Italic.ttf");
    ```
 
 **Installing Missing Fonts:**

@@ -82,7 +82,6 @@ ButtonConfig(100, 100, 200, 50, "My Button")
 // Extended configuration with styling
 ButtonConfig(100, 100, 200, 50, "Styled Button")
     .style(myButtonStyle)
-    .tooltip("This button does something important")
 ```
 
 The builder pattern allows you to chain method calls, setting only the properties you need while getting sensible defaults for everything else.
@@ -113,7 +112,7 @@ void setupUI() {
          .borderRadius(8);                  // Rounded corners
     
     // Apply the style to a button
-    auto styledButton = Button(ButtonConfig(200, 200, 180, 60, "Styled Button").style(style));
+    auto styledButton = Button(ButtonConfig(200, 200, 230, 60, "Styled Button").style(style));
     
     styledButton->onClick.connect([]() {
         std::cout << "Styled button clicked!" << std::endl;
@@ -243,7 +242,7 @@ void setupUI() {
     
     // Create horizontal button row
     auto buttonRow = Row(buttons);
-    buttonRow.setMainAxisAlignment(MainAxisAlignment::Center);
+    buttonRow->setMainAxisAlignment(MainAxisAlignment::Center);
     
     // Center the button row on screen
     auto centerWidget = std::make_shared<CenterWidget>(0, 0, Fern::getWidth(), Fern::getHeight());
@@ -264,7 +263,7 @@ std::vector<std::shared_ptr<Widget>> actionButtons = {
 };
 
 auto actionRow = Row(actionButtons);
-actionRow.setMainAxisAlignment(MainAxisAlignment::End);  // Right-align
+actionRow->setMainAxisAlignment(MainAxisAlignment::End);  // Right-align
 ```
 
 **Button Grid:**
@@ -314,7 +313,7 @@ void setupUI() {
     };
     
     auto buttonRow = Row(presetButtons);
-    buttonRow.setMainAxisAlignment(MainAxisAlignment::Center);
+    buttonRow->setMainAxisAlignment(MainAxisAlignment::Center);
     
     auto centerWidget = std::make_shared<CenterWidget>(0, 0, Fern::getWidth(), Fern::getHeight());
     centerWidget->add(buttonRow);
@@ -353,39 +352,6 @@ autoButton->onClick.connect([autoButton]() {
     autoButton->setConfig(newConfig);
     autoButton->autoSizeToContent(20);  // 20 pixels padding
 });
-```
-
-### Toggle Buttons
-
-Create buttons that maintain pressed/unpressed state:
-
-```cpp
-void setupUI() {
-    static bool isToggled = false;
-    static std::shared_ptr<ButtonWidget> toggleButton;
-    
-    ButtonStyle normalStyle;
-    normalStyle.normalColor(Colors::Gray).textColor(Colors::White);
-    
-    ButtonStyle toggledStyle;
-    toggledStyle.normalColor(Colors::Blue).textColor(Colors::White);
-    
-    toggleButton = Button(ButtonConfig(0, 0, 120, 40, "Toggle: OFF").style(normalStyle));
-    
-    toggleButton->onClick.connect([&]() {
-        isToggled = !isToggled;
-        
-        if (isToggled) {
-            toggleButton->setText("Toggle: ON");
-            toggleButton->setStyle(toggledStyle);
-        } else {
-            toggleButton->setText("Toggle: OFF");
-            toggleButton->setStyle(normalStyle);
-        }
-    });
-    
-    addWidget(toggleButton);
-}
 ```
 
 ### Disabled Buttons

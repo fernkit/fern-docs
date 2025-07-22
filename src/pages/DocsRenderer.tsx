@@ -61,7 +61,6 @@ const DocsRenderer = () => {
       children: [
         { name: "Overview", path: "layout/overview", type: "file" },
         { name: "Layout Engine", path: "layout/layout-system", type: "file" },
-        { name: "Containers", path: "layout/containers", type: "file" },
         { name: "Row & Column", path: "layout/row", type: "file" },
         { name: "Center", path: "layout/center", type: "file" },
         { name: "Expanded", path: "layout/expanded", type: "file" },

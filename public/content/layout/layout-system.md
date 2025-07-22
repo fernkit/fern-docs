@@ -187,36 +187,6 @@ column.setCrossAxisAlignment(CrossAxisAlignment::End);     // Align to right
 column.setCrossAxisAlignment(CrossAxisAlignment::Stretch); // Fill available width
 ```
 
-### Practical Alignment Examples
-
-```cpp
-// Create a header bar with logo on left, menu on right
-std::vector<std::shared_ptr<Widget>> headerItems = {
-    Text(Point(0, 0), "MyApp", 3, Colors::White),
-    SizedBox(100, 0),  // Spacer to push menu right
-    Button(ButtonConfig(0, 0, 80, 30, "Menu"))
-};
-
-auto headerRow = Row(headerItems);
-headerRow.setMainAxisAlignment(MainAxisAlignment::SpaceBetween);
-headerRow.setCrossAxisAlignment(CrossAxisAlignment::Center);
-
-// Create a centered login form
-std::vector<std::shared_ptr<Widget>> loginForm = {
-    Text(Point(0, 0), "Welcome Back", 4, Colors::White),
-    SizedBox(0, 30),
-    TextInput(Point(0, 0), Size(250, 35)),
-    SizedBox(0, 15),
-    TextInput(Point(0, 0), Size(250, 35)),
-    SizedBox(0, 25),
-    Button(ButtonConfig(0, 0, 120, 40, "Sign In"))
-};
-
-auto loginColumn = Column(loginForm);
-loginColumn.setMainAxisAlignment(MainAxisAlignment::Center);
-loginColumn.setCrossAxisAlignment(CrossAxisAlignment::Center);
-```
-
 ## Nested Layouts
 
 The real power of layouts comes from nesting them inside each other to create complex, responsive designs.
@@ -227,13 +197,12 @@ The real power of layouts comes from nesting them inside each other to create co
 void setupUI() {
     // Top navigation bar
     std::vector<std::shared_ptr<Widget>> navItems = {
-        Text(Point(0, 0), "MyApp", 3, Colors::White),
-        Button(ButtonConfig(0, 0, 70, 30, "Home")),
-        Button(ButtonConfig(0, 0, 70, 30, "About")),
-        Button(ButtonConfig(0, 0, 70, 30, "Contact"))
+        Text(Point(0, 0), "Fern", 3, Colors::White),
+        Button(ButtonConfig(0, 0, 90, 30, "Home")),
+        Button(ButtonConfig(0, 0, 90, 30, "About")),
+        Button(ButtonConfig(0, 0, 120, 30, "Contact"))
     };
-    auto navRow = Row(navItems);
-    navRow.setMainAxisAlignment(MainAxisAlignment::SpaceBetween);
+    auto navRow = Row(navItems, false, MainAxisAlignment::SpaceBetween);
     
     // Main content area
     std::vector<std::shared_ptr<Widget>> contentItems = {
@@ -244,16 +213,15 @@ void setupUI() {
         
         // Button row within content
         Row({
-            Button(ButtonConfig(0, 0, 100, 40, "Get Started")),
+            Button(ButtonConfig(0, 0, 180, 40, "Get Started")),
             SizedBox(20, 0),
-            Button(ButtonConfig(0, 0, 100, 40, "Learn More"))
-        })
+            Button(ButtonConfig(0, 0, 170, 40, "Learn More"))
+        }, false, MainAxisAlignment::Center)
     };
-    auto contentColumn = Column(contentItems);
-    contentColumn.setCrossAxisAlignment(CrossAxisAlignment::Center);
+    auto contentColumn = Column(contentItems, false, MainAxisAlignment::Start, CrossAxisAlignment::Center);
     
     // Footer
-    auto footer = Text(Point(0, 0), "© 2025 MyApp. All rights reserved.", 1, Colors::Gray);
+    auto footer = Text(Point(0, 0), "© 2025 Fern. All rights reserved.", 1, Colors::Gray);
     
     // Combine everything in a main layout
     std::vector<std::shared_ptr<Widget>> mainLayout = {
@@ -264,9 +232,7 @@ void setupUI() {
         footer
     };
     
-    auto mainColumn = Column(mainLayout);
-    mainColumn.setMainAxisAlignment(MainAxisAlignment::SpaceBetween);
-    
+    auto mainColumn = Column(mainLayout, false, MainAxisAlignment::SpaceBetween);    
     // Center the entire layout
     auto centerWidget = std::make_shared<CenterWidget>(0, 0, Fern::getWidth(), Fern::getHeight());
     centerWidget->add(mainColumn);
@@ -368,109 +334,6 @@ int main() {
     Fern::setDrawCallback(draw);
     Fern::startRenderLoop();
     return 0;
-}
-```
-
-## Common Layout Patterns
-
-### Form Layout
-
-```cpp
-std::vector<std::shared_ptr<Widget>> createFormField(const std::string& label, int inputWidth = 200) {
-    return {
-        Text(Point(0, 0), label, 2, Colors::White),
-        SizedBox(0, 5),
-        TextInput(Point(0, 0), Size(inputWidth, 30)),
-        SizedBox(0, 20)
-    };
-}
-
-void setupUI() {
-    std::vector<std::shared_ptr<Widget>> formElements;
-    
-    // Add form fields
-    auto nameField = createFormField("Full Name:");
-    auto emailField = createFormField("Email Address:");
-    auto passwordField = createFormField("Password:");
-    
-    formElements.insert(formElements.end(), nameField.begin(), nameField.end());
-    formElements.insert(formElements.end(), emailField.begin(), emailField.end());
-    formElements.insert(formElements.end(), passwordField.begin(), passwordField.end());
-    
-    // Add submit button
-    formElements.push_back(Button(ButtonConfig(0, 0, 120, 40, "Submit")));
-    
-    auto form = Column(formElements);
-    form.setCrossAxisAlignment(CrossAxisAlignment::Start);
-    
-    auto centerWidget = std::make_shared<CenterWidget>(0, 0, Fern::getWidth(), Fern::getHeight());
-    centerWidget->add(form);
-    addWidget(centerWidget);
-}
-```
-
-### Toolbar Layout
-
-```cpp
-void createToolbar() {
-    std::vector<std::shared_ptr<Widget>> leftTools = {
-        Button(ButtonConfig(0, 0, 40, 30, "⬅")),
-        Button(ButtonConfig(0, 0, 40, 30, "➡")),
-        SizedBox(10, 0),
-        Button(ButtonConfig(0, 0, 60, 30, "Home"))
-    };
-    
-    std::vector<std::shared_ptr<Widget>> rightTools = {
-        Button(ButtonConfig(0, 0, 60, 30, "Search")),
-        Button(ButtonConfig(0, 0, 60, 30, "Settings")),
-        Button(ButtonConfig(0, 0, 60, 30, "Profile"))
-    };
-    
-    auto leftRow = Row(leftTools);
-    auto rightRow = Row(rightTools);
-    
-    std::vector<std::shared_ptr<Widget>> toolbarItems = {
-        leftRow,
-        rightRow  // SizedBox between them would center, SpaceBetween alignment pushes them apart
-    };
-    
-    auto toolbar = Row(toolbarItems);
-    toolbar.setMainAxisAlignment(MainAxisAlignment::SpaceBetween);
-    toolbar.setCrossAxisAlignment(CrossAxisAlignment::Center);
-    
-    addWidget(toolbar);
-}
-```
-
-### Modal Dialog Layout
-
-```cpp
-void showModal() {
-    // Semi-transparent overlay
-    auto overlay = std::make_shared<Widget>();  // Custom widget that draws transparent background
-    
-    // Modal content
-    std::vector<std::shared_ptr<Widget>> modalContent = {
-        Text(Point(0, 0), "Confirm Action", 3, Colors::White),
-        SizedBox(0, 20),
-        Text(Point(0, 0), "Are you sure you want to proceed?", 2, Colors::Gray),
-        SizedBox(0, 30),
-        
-        Row({
-            Button(ButtonConfig(0, 0, 80, 35, "Cancel")),
-            SizedBox(20, 0),
-            Button(ButtonConfig(0, 0, 80, 35, "OK"))
-        })
-    };
-    
-    auto modal = Column(modalContent);
-    modal.setCrossAxisAlignment(CrossAxisAlignment::Center);
-    
-    auto centerWidget = std::make_shared<CenterWidget>(0, 0, Fern::getWidth(), Fern::getHeight());
-    centerWidget->add(modal);
-    
-    addWidget(overlay);
-    addWidget(centerWidget);
 }
 ```
 
